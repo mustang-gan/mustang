@@ -153,6 +153,7 @@ class LipizzanerMaster:
             if db_logger.is_enabled and self.experiment_id is not None:
                 db_logger.finish_experiment(self.experiment_id)
 
+            input("Mustang has finished. Press [Enter] to exit.")
             exit(return_code)
 
     def _gather_results(self):
