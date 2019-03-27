@@ -102,7 +102,9 @@ class LipizzanerMaster:
         return accessible_clients
 
     def _load_available_clients(self):
-        ip_addresses = get_network_devices()
+        client_ips = self.cc.settings['general']['distribution']['client_nodes_ips']
+        print(client_ips)
+        ip_addresses = get_network_devices(client_ips=client_ips)
         possible_clients = []
         for ip in ip_addresses:
             possible_clients.append({'address': ip, 'port': 5000})

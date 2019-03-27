@@ -9,7 +9,9 @@ losswise:
   api_key: # Fill in API key
 output_dir: ./output
 distribution:
-  auto_discover: False
+  auto_discover: True #Falsei
+  client_nodes_ips:
+    - 10.0.0.37
   master_node:
     exit_clients_on_disconnect: True
   client_nodes:
