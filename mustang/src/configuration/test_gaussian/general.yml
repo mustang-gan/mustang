@@ -6,14 +6,14 @@ logging:
   print_discriminator: False
 losswise:
   enabled: False
-  api_key: ZFQFFZEBV 
+  api_key: ZFQFFZEBV
 output_dir: ./output
 distribution:
   auto_discover: False
   master_node:
     exit_clients_on_disconnect: True
   client_nodes:
-    - address: localhost 
-      port: 5000-5003
+    - address: localhost
+      port: 5000
 seed: 1
 num_workers: 0    # how many subprocesses to use for data loading

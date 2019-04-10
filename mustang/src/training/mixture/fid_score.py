@@ -65,7 +65,7 @@ class FIDCalculator(ScoreCalculator):
         model = None
         if self.cc.settings['dataloader']['dataset_name'] == 'mnist':    # Gray dataset
             model = MNISTCnn()
-            model.load_state_dict(torch.load('./output/networks/mnist_cnn.pkl'))
+            model.load_state_dict(torch.load('./networks/mnist_cnn/mnist_cnn.pkl'))
         else:    # Other RGB dataset
             block_idx = InceptionV3.BLOCK_INDEX_BY_DIM[self.dims]
             model = InceptionV3([block_idx])

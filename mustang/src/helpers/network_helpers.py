@@ -4,8 +4,7 @@ import os
 import socket
 import subprocess
 import netifaces as ni
-from netaddr import IPNetwork
-
+from netaddr import IPNetwork, IPAddress
 
 def primary_nic_info():
     # Works on docker containers
@@ -54,47 +53,49 @@ def is_port_open(port):
     s.close()
     return True
 
-
-def get_network_devices(pool_size=255):
+def get_network_devices(pool_size=255, client_ips=[]):
     def pinger(job_q, results_q):
         dev_null = open(os.devnull, 'w')
         while True:
             ip = job_q.get()
-
             if ip is None:
                 break
-
             try:
                 subprocess.check_call(['ping', '-c1', ip],
                                       stdout=dev_null)
                 results_q.put(ip)
             except Exception:
                 pass
-
     ip_list = list()
-
-    network = '{}/{}'.format(local_private_ip(), local_submask())
-
+    print("List of the proposed client IPs: {}".format(client_ips))
+    if len(client_ips) > 0:
+        list_ips = list()
+        for client_ip in client_ips:
+            list_ips.append(IPAddress(client_ip))
+            pool_size = len(list_ips)
+    else:
+        network = '{}/{}'.format(local_private_ip(), local_submask())
+        list_ips = IPNetwork(network)
+    #listIps = [IPAddress('10.0.0.6')]
+    #pool_size=len(listIps)
+    print(pool_size)
     # prepare the jobs queue
     jobs = multiprocessing.Queue()
     results = multiprocessing.Queue()
-
     pool = [multiprocessing.Process(target=pinger, args=(jobs, results)) for _ in range(pool_size)]
-
     for p in pool:
         p.start()
-
-    for ip in IPNetwork(network):
+    for ip in list_ips:
+    #for ip in IPNetwork(network):
         jobs.put(str(ip))
-
     for _ in pool:
         jobs.put(None)
-
     for p in pool:
         p.join()
-
     # collect the results
     while not results.empty():
         ip_list.append(results.get())
-
+    print(ip_list)
     return ip_list
+
+    
