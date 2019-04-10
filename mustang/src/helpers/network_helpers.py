@@ -67,7 +67,7 @@ def get_network_devices(pool_size=255, client_ips=[]):
             except Exception:
                 pass
     ip_list = list()
-    print("CLIENTS IP: {}".format(client_ips))
+    print("List of the proposed client IPs: {}".format(client_ips))
     if len(client_ips) > 0:
         list_ips = list()
         for client_ip in client_ips:
