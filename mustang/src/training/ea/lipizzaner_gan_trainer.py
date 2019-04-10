@@ -82,15 +82,9 @@ class LipizzanerGANTrainer(EvolutionaryAlgorithmTrainer):
 
         loaded = self.dataloader.load()
     
-        #for iteration in range(n_iterations):
-        iteration=-1
-        SECONDS_TIMEOUT = 60
-        timeout = time() + SECONDS_TIMEOUT
-        while True:
-            iteration += 1 
-            if time() > timeout:
-               break
-                        
+        iteration = 0
+        #while True:
+        while iteration < n_iterations:
 
             self._logger.debug('Iteration {} started'.format(iteration + 1))
             start_time = time()
@@ -212,7 +206,7 @@ class LipizzanerGANTrainer(EvolutionaryAlgorithmTrainer):
                 self.db_logger.log_results(iteration, self.neighbourhood, self.concurrent_populations,
                                            self.score, stop_time - start_time,
                                            path_real_images, path_fake_images)
-
+            iteration += 1
         return self.result()
 
     def step(self, original, attacker, defender, input_data, i, loaded, data_iterator):
