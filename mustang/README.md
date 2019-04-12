@@ -141,7 +141,7 @@ This is needed to establish communication between containers on multiple machine
     ```
     docker network inspect lpz-overlay
     ```
-5. Edit `general.yml` file to set autodiscover to `True` and include the IP addresses of the containers in order to allow the master to discover them.  
+5. Edit `general.yml` file to set autodiscover to `True` and include the IP addresses of the containers in order to allow the master to discover them. The `distribution` section of the `general.yml` file should include the following information: 
     ```
     ...
     distribution:
