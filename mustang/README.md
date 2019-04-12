@@ -154,11 +154,11 @@ This is needed to establish communication between containers on multiple machine
 
 6. Run the Lipizzaner master to start the experiments. 
     *Execute on any node (notice that this command differs from the one in the previous section - '-e SWARM=True' was removed):* 
-        ```
-        nvidia-docker run -it --rm --runtime=nvidia -e config_file=$CONFIG_FILE -e role=master --network lpz-overlay --name lipizzaner-master lipizzaner2018/lipizzaner:latest
-        ```
+    
         
-        Set the config file path as you would for a non-docker run, e.g. `CONFIG_FILE=configuration/lipizzaner-gan/celeba.yml`.
+        nvidia-docker run -it --rm --runtime=nvidia -e config_file=$CONFIG_FILE -e role=master --network lpz-overlay --name lipizzaner-master lipizzaner2018/lipizzaner:latest
+        
+    Set the config file path as you would for a non-docker run, e.g. `CONFIG_FILE=configuration/lipizzaner-gan/celeba.yml`.
         Lipizzaner wil automatically detect and use all non-busy nodes in the Docker overlay network.
 
 Some local implementations are parallelized, others are not (as the focus was on the distributed setup).
