@@ -25,7 +25,7 @@ pip install -r ./src/helper_files/requirements.txt
 Lipizzaner includes a quick start example to test the installation. In this experiment Lipizzaner trains a GAN by using four clients during 5 generations. The configuration files are located in `./src/configuration/quickstart/`. 
 
 It is needed to set up some configuration parameters in `general.yml` to run the quick start experiment:
-1. Set the clients IP:PORT addresses
+1. Set the clients <IP>:<PORT> addresses
 2. Set the Losswise API key
 
 To run the quickstart experiments the four clients should be started (e.g. by runing the above commands):
@@ -79,13 +79,14 @@ The master will then wait until the clients are finished, collect the results, a
     ```
     
 3. **Optional:** Login to a Docker Hub account that has access to the private lipizzaner2018/lipizzaner repository (with `docker login`) on each machine.
-4. If you don't want to use Docker Hub, you alternatively can clone the repo and build the container on each machine. 
+4. On manager node make sure that **autodiscover is set to `True` in `general.yml`, as this is required when running in docker.**
+5. If you don't want to use Docker Hub, you alternatively can clone the repo and build the container on each machine. 
 
     *To manually build the container, execute:* 
     ```
     docker build -t lipizzaner2018/lipizzaner .
     ```
-5. Run the Lipizzaner clients.
+6. Run the Lipizzaner clients.
  
     *Execute on the **manager** node:* 
     ```
@@ -94,19 +95,17 @@ The master will then wait until the clients are finished, collect the results, a
     
     Docker will automatically distribute the clients over the all nodes in your swarm. 
    
-6. Run the Lipizzaner master to start the experiments. 
+7. Run the Lipizzaner master to start the experiments. 
 
-    - **Make sure that autodiscover is set to `True` in `general.yml`, as this is required when running in docker.**
-
-    - *Execute on any node:* 
-        ```
-        docker run -it --rm -e config_file=$CONFIG_FILE -e SWARM=True -e role=master --network lpz-overlay --name lipizzaner-master lipizzaner2018/lipizzaner:latest
-        ```
+    *Execute on any node:* 
+     ```
+    docker run -it --rm -e config_file=$CONFIG_FILE -e SWARM=True -e role=master --network lpz-overlay --name lipizzaner-master lipizzaner2018/lipizzaner:latest
+    ```
         
-        Set the config file path as you would for a non-docker run, e.g. `CONFIG_FILE=configuration/lipizzaner-gan/celeba.yml`.
-        Lipizzaner wil automatically detect and use all non-busy nodes in the Docker overlay network.
+    Set the config file path as you would for a non-docker run, e.g. `CONFIG_FILE=configuration/lipizzaner-gan/celeba.yml`.
+    Lipizzaner wil automatically detect and use all non-busy nodes in the Docker overlay network.
  
-7. When the experiment has finished, you can stop the client service (or keep it running for future experiments):
+8. When the experiment has finished, you can stop the client service (or keep it running for future experiments):
     ```
     docker service rm lpz
     ```
