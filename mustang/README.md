@@ -70,7 +70,7 @@ The master will then wait until the clients are finished, collect the results, a
     *Execute on orchestrator (or 'manager') node:*
     ```
     docker swarm init --advertise-addr <YOUR_IP_ADDRESS>
-    docker network create -d overlay lpz-overlay
+    docker network create --attachable -d overlay lpz-overlay
     ```
 
     *Execute on worker nodes (the exact command, including the token, is returned by first of the above commands):*
@@ -100,10 +100,10 @@ The master will then wait until the clients are finished, collect the results, a
 
     - *Execute on any node:* 
         ```
-        docker run -it --rm -e config_file=CONFIG_FILE -e SWARM=True -e role=master --network lpz-overlay --name lipizzaner-master lipizzaner2018/lipizzaner:lates
+        docker run -it --rm -e config_file=$CONFIG_FILE -e SWARM=True -e role=master --network lpz-overlay --name lipizzaner-master lipizzaner2018/lipizzaner:latest
         ```
         
-        Set the config file path as you would for a non-docker run, e.g. `configuration/lipizzaner-gan/celeba.yml`.
+        Set the config file path as you would for a non-docker run, e.g. `CONFIG_FILE=configuration/lipizzaner-gan/celeba.yml`.
         Lipizzaner wil automatically detect and use all non-busy nodes in the Docker overlay network.
  
 7. When the experiment has finished, you can stop the client service (or keep it running for future experiments):
@@ -132,7 +132,7 @@ This is needed to establish communication between containers on multiple machine
     *Execute the following command multiple times on each machine, e.g. 5 times each on 5 machines for 25 Lipizzaner clients:*
     
     ```
-    docker run -d --rm -e role=client --runtime=nvidia --network lpz-overlay lipizzaner2018/lipizzaner:latest
+    nvidia-docker run -d --rm -e role=client --runtime=nvidia --network lpz-overlay lipizzaner2018/lipizzaner:latest
     ```
 
 6. Run the Lipizzaner master to start the experiments. 
@@ -141,10 +141,10 @@ This is needed to establish communication between containers on multiple machine
 
     - *Execute on any node (notice that this command differs from the one in the previous section - '-e SWARM=True' was removed):* 
         ```
-        docker run -it --rm -e config_file=CONFIG_FILE -e role=master --network lpz-overlay --name lipizzaner-master lipizzaner2018/lipizzaner:lates
+        nvidia-docker run -it --rm --runtime=nvidia -e config_file=$CONFIG_FILE -e role=master --network lpz-overlay --name lipizzaner-master lipizzaner2018/lipizzaner:latest
         ```
         
-        Set the config file path as you would for a non-docker run, e.g. `configuration/lipizzaner-gan/celeba.yml`.
+        Set the config file path as you would for a non-docker run, e.g. `CONFIG_FILE=configuration/lipizzaner-gan/celeba.yml`.
         Lipizzaner wil automatically detect and use all non-busy nodes in the Docker overlay network.
 
 Some local implementations are parallelized, others are not (as the focus was on the distributed setup).
