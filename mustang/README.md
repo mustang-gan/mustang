@@ -79,7 +79,7 @@ The master will then wait until the clients are finished, collect the results, a
     ```
     
 3. **Optional:** Login to a Docker Hub account that has access to the private lipizzaner2018/lipizzaner repository (with `docker login`) on each machine.
-4. On manager node make sure that **autodiscover is set to `True` in `general.yml`, as this is required when running in docker.**
+4. Make sure that **autodiscover is set to `True` in `general.yml`, as this is required when running in docker.**
 5. If you don't want to use Docker Hub, you alternatively can clone the repo and build the container on each machine. 
 
     *To manually build the container, execute:* 
@@ -119,14 +119,17 @@ GPU support for Docker Swarms is currently limited:
 
 
 ##### Option 3: Docker with GPU support
-The most simple workaround for the limitations stated above (especially the first one) is to manually run the docker containers manually (not as swarm services):
+The most simple workaround for the limitations stated above (especially the first one) is to manually run the docker containers manually (not as swarm services). This additionally changes the configuration un the `general.yml` file.
 
 1. Use the command described in the first point of the section above to create a swarm and an overlay network. 
-This is needed to establish communication between containers on multiple machines.
+This is needed to establish communication between containers on multiple machines (steps 1, 2, and 3).
 
-2. Login to Docker Hub (or manually build the image), also described above.
+2. Manually build the container in any cliaent node by executing:
+    ```
+    docker build -t lipizzaner2018/lipizzaner .
+    ```
 
-5. Run the Lipizzaner clients.
+3. Run the Lipizzaner clients.
  
     *Execute the following command multiple times on each machine, e.g. 5 times each on 5 machines for 25 Lipizzaner clients:*
     
@@ -134,11 +137,23 @@ This is needed to establish communication between containers on multiple machine
     nvidia-docker run -d --rm -e role=client --runtime=nvidia --network lpz-overlay lipizzaner2018/lipizzaner:latest
     ```
 
+4. For each client node get the IP of the runing container. This can be got by runing the following commad:
+    ```
+    docker network inspect lpz-overlay
+    ```
+5. Edit `general.yml` file to set autodiscover to `True` and include the IP addresses of the containers in order to allow the master to discover them.  
+    ```
+    ...
+    distribution:
+       auto_discover: True
+       client_nodes_ips: #List of the ips of the client docker containers
+         - <IP cliet 1>
+         - <IP cliet 2>
+         ...
+    ```
+
 6. Run the Lipizzaner master to start the experiments. 
-
-    - **Again, make sure that autodiscover is set to `True` in `general.yml`, as this is required when running in docker.**
-
-    - *Execute on any node (notice that this command differs from the one in the previous section - '-e SWARM=True' was removed):* 
+    *Execute on any node (notice that this command differs from the one in the previous section - '-e SWARM=True' was removed):* 
         ```
         nvidia-docker run -it --rm --runtime=nvidia -e config_file=$CONFIG_FILE -e role=master --network lpz-overlay --name lipizzaner-master lipizzaner2018/lipizzaner:latest
         ```
