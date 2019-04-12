@@ -30,18 +30,14 @@ It is needed to set up some configuration parameters in `general.yml` to run the
 
 To run the quickstart experiments the four clients should be started (e.g. by runing the above commands):
     
-    ```
     python main.py train --distributed --client; sleep 5 &  
     python main.py train --distributed --client; sleep 5 &
     python main.py train --distributed --client; sleep 5 &
     python main.py train --distributed --client; sleep 5 &
-    ```
 
 To start the master command line parameters are:
     
-    ```
     python main.py train --distributed --master -f configuration/quickstart/mnist.yml`
-    ```
 
 
 ### *Distributed* training
