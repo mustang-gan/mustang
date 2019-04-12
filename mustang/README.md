@@ -25,7 +25,7 @@ pip install -r ./src/helper_files/requirements.txt
 Lipizzaner includes a quick start example to test the installation. In this experiment Lipizzaner trains a GAN by using four clients during 5 generations. The configuration files are located in `./src/configuration/quickstart/`. 
 
 It is needed to set up some configuration parameters in `general.yml` to run the quick start experiment:
-1. Set the clients IP addresses
+1. Set the clients IP:PORT addresses
 2. Set the Losswise API key
 
 To run the quickstart experiments the four clients should be started (e.g. by runing the above commands):
