@@ -26,6 +26,8 @@ from torch.autograd import Variable
 from torch.nn.functional import adaptive_avg_pool2d
 
 from helpers.configuration_container import ConfigurationContainer
+from helpers.pytorch_helpers import is_cuda_available
+
 from training.mixture.fid_mnist import MNISTCnn
 from training.mixture.fid_inception import InceptionV3
 from training.mixture.score_calculator import ScoreCalculator
@@ -65,12 +67,12 @@ class FIDCalculator(ScoreCalculator):
         model = None
         if self.cc.settings['dataloader']['dataset_name'] == 'mnist':    # Gray dataset
             model = MNISTCnn()
-            model.load_state_dict(torch.load('./networks/mnist_cnn/mnist_cnn.pkl'))
+            model.load_state_dict(torch.load('./training/mixture/mnist_cnn.pkl'))
         else:    # Other RGB dataset
             block_idx = InceptionV3.BLOCK_INDEX_BY_DIM[self.dims]
             model = InceptionV3([block_idx])
 
-        if self.cuda:
+        if is_cuda_available() and self.cuda:
             model.cuda()
         m1, s1 = self._compute_statistics_of_path(self.imgs_original, model)
         m2, s2 = self._compute_statistics_of_path(imgs, model)
@@ -115,7 +117,7 @@ class FIDCalculator(ScoreCalculator):
 
             batch = torch.stack(images[start:end])
             batch = Variable(batch, volatile=True)
-            if self.cuda:
+            if is_cuda_available() and self.cuda:
                 batch = batch.cuda()
             else:
                 # .cpu() is required to convert to torch.FloatTensor because image

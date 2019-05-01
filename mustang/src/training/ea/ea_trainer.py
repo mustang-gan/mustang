@@ -90,7 +90,10 @@ class EvolutionaryAlgorithmTrainer(NeuralNetworkTrainer, ABC):
 
         if is_logging:
             new_individuals_names = [individual.name for individual in new_population.individuals]
+            new_individuals_losses = [individual.genome.loss_function_name for individual in new_population.individuals]
             self._logger.info('{} are selected from tournament selection'.format(new_individuals_names))
+            self._logger.info('{} are selected from tournament selection'.format(new_individuals_losses))
+
 
         return new_population
 
