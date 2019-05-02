@@ -24,4 +24,5 @@ class StateEncoder:
             tmp.write(codecs.decode(data.encode(), "base64"))
             tmp.flush()
             tmp.seek(0)
-            return torch.load(tmp)
+            return torch.load(tmp, map_location=lambda storage, loc: storage)
+            #return torch.load(tmp)
