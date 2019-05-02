@@ -73,6 +73,7 @@ class CompetetiveNet(ABC):
         """
         :param value: base64 encoded representation of the networks state dictionary
         """
+        #self._logger.info("Encoded paramenter: {} {} ".format(value, StateEncoder.decode(value)))
         self.net.load_state_dict(StateEncoder.decode(value))
 
     @property
@@ -127,7 +128,6 @@ class GeneratorNet(CompetetiveNet):
         super().__init__(loss_function, net, data_size, optimize_bias, "Loss not conficured yet")
 
         if 'SMuGANLoss' in loss_function.__class__.__name__:
-            self._logger.info("Prev. Loss function: {} ".format(self.loss_function_name))
             prob = np.random.uniform()
             if prob < 0.33:
                 self.loss_function_to_apply =  torch.nn.BCELoss()
@@ -142,7 +142,7 @@ class GeneratorNet(CompetetiveNet):
             self.loss_function_to_apply = self.loss_function
             self.loss_function_name = self.loss_function.__class__.__name__
         
-        self._logger.info("Post. Loss function: {}".format(self.loss_function_name))
+        self._logger.info("Selected loss function: {}".format(self.loss_function_name))
 
 
         #self.bceloss = torch.nn.BCELoss()

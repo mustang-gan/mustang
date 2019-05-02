@@ -82,6 +82,10 @@ class EvolutionaryAlgorithmTrainer(NeuralNetworkTrainer, ABC):
 
             # Copy the solution
             winner = competitors[0].clone()
+
+            self._logger.info('Tournament selection results: Winner: {} - Loss: {}'.format(competitors[0].name, competitors[0].genome.loss_function_name))
+            #self._logger.info('{} is selected from tournament selection'.format(competitors[0].genome.loss_function_name))
+
             winner.is_local = True
             winner.fitness = competition_population.default_fitness
 

@@ -24,6 +24,8 @@ class Population:
         if is_logging:
             sorted_individuals_names = [individual.name for individual in self.individuals]
             self._logger.info('Current local sorted population is {}'.format(sorted_individuals_names))
+            sorted_individuals_losses = [individual.genome.loss_function_name for individual in self.individuals]
+            self._logger.info('Current local sorted population applies {} loss'.format(sorted_individuals_losses))
 
     def replacement(self, new_population, n_replacements=1, is_logging=False):
         new_population.sort_population()
