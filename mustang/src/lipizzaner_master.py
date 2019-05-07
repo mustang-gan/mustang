@@ -112,9 +112,9 @@ class LipizzanerMaster:
         accessible_clients = sorted(self._accessible_clients(possible_clients), key=lambda x: x['address'])
 
         # Docker swarm specific: lowest address is overlay network address, remove it
-        if os.environ.get('SWARM', False) == 'True' and len(accessible_clients) != 0:
-            print('Removing client 0')
-            del accessible_clients[0]
+        #if os.environ.get('SWARM', False) == 'True' and len(accessible_clients) != 0:
+        #    print('Removing client 0')
+        #    del accessible_clients[0]
 
         return accessible_clients
 
