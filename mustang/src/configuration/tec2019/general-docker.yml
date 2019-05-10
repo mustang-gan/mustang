@@ -9,23 +9,18 @@ losswise:
   api_key: # Fill in API key
 output_dir: ./output
 distribution:
-  auto_discover: True 
+  auto_discover: True
   client_nodes_ips: #List of the ips of the client docker containers
   #- 10.0.0.180
-    - 10.0.0.114
-    - 10.0.0.115
-    - 10.0.0.116
-    - 10.0.0.117
-    - 10.0.0.118
-    - 10.0.0.119
-    - 10.0.0.120
-    - 10.0.0.121
-    - 10.0.0.122
-    - 10.0.0.123
-    - 10.0.0.137
-    - 10.0.0.96
-    - 10.0.0.97
-    - 10.0.0.98  
+    - 10.0.0.4
+    - 10.0.0.5
+    - 10.0.0.6
+    - 10.0.0.2
+    - 10.0.0.7
+    - 10.0.0.8
+    - 10.0.0.9
+    - 10.0.0.10
+    - 10.0.0.11
   master_node:
     exit_clients_on_disconnect: True
   client_nodes:
@@ -33,3 +28,4 @@ distribution:
       port: 5000
 seed: 1
 num_workers: 0    # how many subprocesses to use for data loading
+
