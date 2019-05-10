@@ -27,7 +27,7 @@ dataloader:
   dataset_name: mnist
   use_batch: True
   batch_size: 100
-  n_batches: 300
+  n_batches: 0
   shuffle: True
 network:
   name: four_layer_perceptron
