@@ -142,7 +142,7 @@ class GeneratorNet(CompetetiveNet):
             self.loss_function_to_apply = self.loss_function
             self.loss_function_name = self.loss_function.__class__.__name__
         
-        self._logger.info("Selected loss function: {}".format(self.loss_function_name))
+        self._logger.info("Generator - Selected loss function: {}".format(self.loss_function_name))
 
 
         #self.bceloss = torch.nn.BCELoss()
@@ -186,6 +186,18 @@ class GeneratorNet(CompetetiveNet):
 
 
 class DiscriminatorNet(CompetetiveNet):
+    def __init__(self, loss_function, net, data_size, optimize_bias=True):
+        super().__init__(loss_function, net, data_size, optimize_bias, "Loss not conficured yet")
+
+        if 'MSELoss' in loss_function.__class__.__name__:
+            self.loss_function_to_apply =  torch.nn.MSELoss()
+            self.loss_function_name = "MSE"
+        else:
+            self.loss_function_to_apply = torch.nn.BCELoss() 
+            self.loss_function_name = self.loss_function.__class__.__name__
+
+        self._logger.info("Discriminator - Selected loss function: {}".format(self.loss_function_name))
+    
     @property
     def name(self):
         return 'Discriminator'
@@ -203,13 +215,13 @@ class DiscriminatorNet(CompetetiveNet):
 
         outputs = self.net(input).view(-1)
         #d_loss_real = self.loss_function(outputs, real_labels)
-        d_loss_real = torch.nn.functional.binary_cross_entropy(outputs, real_labels)
+        d_loss_real = self.loss_function_to_apply(outputs, real_labels)
 
         # Compute BCELoss using fake images
         # First term of the loss is always zero since fake_labels == 0
         z = noise(batch_size, self.data_size)
         fake_images = opponent.net(z)
         outputs = self.net(fake_images).view(-1)
-        d_loss_fake = torch.nn.functional.binary_cross_entropy(outputs, fake_labels)
+        d_loss_fake = self.loss_function_to_apply(outputs, fake_labels)
 
         return d_loss_real + d_loss_fake, None
