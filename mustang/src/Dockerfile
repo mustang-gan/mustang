@@ -1,4 +1,4 @@
-FROM nvidia/cuda:9.0-devel
+FROM nvidia/cuda:10.0-devel-ubuntu16.04
 ENV config_file NONE
 ENV role NONE
 ENV TZ=America/New_York
