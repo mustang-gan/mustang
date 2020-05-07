@@ -30,23 +30,29 @@ Generative adversary networks (GANs) suffer from training pathologies such as in
 
 #### ACM Reference Format:
 
-Jamal Toutouh, Erik Hemberg, and Una-May O’Reilly. 2019. Re-purposing Heterogeneous Generative Ensembles with Evolutionary Computation. In *Genetic and Evolutionary Computation Conference (GECCO ’20), 2020.* ACM, New York, NY, USA, 9 pages. [https://doi.org/10.1145/3377930.3390229](https://doi.org/10.1145/3377930.3390229)
+Jamal Toutouh, Erik Hemberg, and Una-May O’Reilly. 2019. Re-purposing Heterogeneous Generative Ensembles with Evolutionary Computation. In *Genetic and Evolutionary Computation Conference (GECCO ’19), 2019.* ACM, New York, NY, USA, 9 pages. [https://doi.org/10.1145/3321707.3321860](https://doi.org/10.1145/3321707.3321860)
 
 #### Bibtex Reference Format:
 
 ```
-@inproceedings{Toutouh_GECO2020,
+
+@inproceedings{Toutouh_GECCO19,
 author = {Toutouh, Jamal and Hemberg, Erik and O’Reilly, Una-May},
-title = {Re-purposing Heterogeneous Generative Ensembles with Evolutionary Computation},
-year = {2020},
+title = {Spatial Evolutionary Generative Adversarial Networks},
+year = {2019},
+isbn = {9781450361118},
 publisher = {Association for Computing Machinery},
 address = {New York, NY, USA},
-url = {https://doi.org/10.1145/3377930.3390229},
-doi = {10.1145/3377930.3390229},
+url = {https://doi.org/10.1145/3321707.3321860},
+doi = {10.1145/3321707.3321860},
 booktitle = {Proceedings of the Genetic and Evolutionary Computation Conference},
+pages = {472–480},
 numpages = {9},
-series = {GECCO ’2020}
+keywords = {diversity, coevolution, generative adversarial networks},
+location = {Prague, Czech Republic},
+series = {GECCO ’19}
 }
+
 ```
 
 
